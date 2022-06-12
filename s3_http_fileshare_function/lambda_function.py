@@ -49,7 +49,17 @@ class PathHandler:
 	def __call__(cls, event):
 		# Get the requested path
 		query_string_params = event.get("queryStringParameters", {})
+		print(event)
+		print(query_string_params)
+
+		# In case there is an & in the actual URL that's being passed, we
+		#  need to first extract the path, then add on the rest from
+		#  the query string
 		path = query_string_params.get("path", "").lstrip("/")
+		for key in [q for q in query_string_params if q != "path"]:
+			path += "&" + key
+			if query_string_params[key]:
+				path += "=" + query_string_params[key]
 
 		# Sorting by something
 		if "?C=" in path:
