@@ -231,7 +231,7 @@ class PathHandler:
 				item_rows += f"""
 					<tr>
 						<td valign="top"><img src="/icons/sound2.gif" alt="[SND]"></td>
-						<td><a href="{item.path}">{item.name}</a></td>
+						<td><a href="{item.path}" type="audio/mp3">{item.name}</a></td>
 						<td align="right">{item.last_modified.strftime('%Y-%m-%d %H:%M')}  </td>
 						<td align="right">{_bytes_to_readable(item.size)}</td>
 						<td>&nbsp;</td>
