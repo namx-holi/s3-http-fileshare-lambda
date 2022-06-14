@@ -7,7 +7,7 @@ import os.path
 s3 = boto3.client("s3")
 BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
 REGION_NAME = os.environ.get("S3_REGION_NAME")
-PREFIX_DIR  = os.environ.get("S3_STORE_PATH")
+PREFIX_DIR  = os.environ.get("S3_STORE_PATH", "")
 
 
 def _bytes_to_readable(num, suffix=""):
