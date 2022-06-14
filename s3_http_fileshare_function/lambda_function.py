@@ -5,10 +5,9 @@ import os.path
 
 
 s3 = boto3.client("s3")
-BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
-REGION_NAME = os.environ.get("S3_REGION_NAME")
-
-prefix_dir = "public"
+BUCKET_NAME   = os.environ.get("S3_BUCKET_NAME")
+REGION_NAME   = os.environ.get("S3_REGION_NAME")
+S3_STORE_PATH = os.environ.get("S3_STORE_PATH")
 
 
 def _bytes_to_readable(num, suffix=""):
@@ -25,7 +24,7 @@ class Item:
 
 		if self.is_dir:
 			# Strip the prefix dir out of the path
-			self.path = path[len(prefix_dir):]
+			self.path = path[len(S3_STORE_PATH):]
 
 			# Dir ends in / which messes with basename
 			self.name = os.path.basename(self.path.rstrip("/"))
@@ -35,7 +34,7 @@ class Item:
 			self.path = f"https://{BUCKET_NAME}.s3.{REGION_NAME}.amazonaws.com/{path}"
 
 			# Strip the prefix dir out of the path to use for name
-			self.name = os.path.basename(path[len(prefix_dir):])
+			self.name = os.path.basename(path[len(S3_STORE_PATH):])
 
 		self.last_modified = last_modified
 		self.size = size # In bytes
@@ -71,7 +70,7 @@ class PathHandler:
 
 		# If the path ends in a /, or is empty (root dir), we'll assume it's a directory
 		if path.endswith("/") or path == "":
-			query = s3.list_objects(Bucket=BUCKET_NAME, Prefix=prefix_dir+"/"+path, Delimiter="/")
+			query = s3.list_objects(Bucket=BUCKET_NAME, Prefix=S3_STORE_PATH+"/"+path, Delimiter="/")
 			
 			items = []
 
