@@ -7,9 +7,10 @@ Create a lambda function using Python3.8+ in AWS with an API gateway and S3 read
 
 Replace the `lambda_function.py` code with the one in this repo.
 
-Add two environment variables:
+Add environment variables:
 	- S3_BUCKET_NAME = the name of the bucket mp3s are stored in
 	- S3_REGION_NAME = the region the bucket is located in
+	- S3_STORE_PATH  = the directory we are using to share in the bucket, e.g. /public or /
 
 In the `nginx-site.conf`, replace instances of `example.com` with your domain, and the proxy_pass directive link to the url of your API gateway for the lambda function. Also either comment out ssl lines or replace them with relevant lines for your setup.
 
